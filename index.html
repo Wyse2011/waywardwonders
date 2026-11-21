@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wayward Wonders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* VOICE occasion: a venue's front door, warm candlelight against Ishgard's cold night
+   IDEA a guild hall's illuminated sign and its pinned contract board
+   PICTURE the venue crest over a snowy night sky, then the shop, board and bar paintings
+   COLOUR deep plum night, parchment ink, guild gold, ivy green for growing things
+   TYPE Cinzel for carved signage + EB Garamond for the written word
+   LAYOUT crest centred over snowfall; then alternating picture/text bands; rules in two columns; stacks below 700px */
+:root{color-scheme:dark;--bg:#120a16;--bg2:#1b1022;--panel:#231529;--ink:#f1e6d2;--soft:#c9b9a3;--gold:#d9a94e;--gold2:#f0cd7f;--plum:#5b2a73;--ivy:#8fae4f;--line:rgba(217,169,78,.28)}
+:root[data-theme=light],:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 "EB Garamond",Georgia,serif;overflow-x:clip}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--gold2)}
+h1,h2,h3{font-family:Cinzel,"Times New Roman",serif;font-weight:700;line-height:1.1;letter-spacing:-.01em;margin:0 0 .5em;text-wrap:balance}
+h2{font-size:clamp(30px,4.4vw,46px);color:var(--gold2)}
+h3{font-size:21px;color:var(--ink)}
+p{margin:0 0 1em;max-width:62ch}
+.band{padding-block:clamp(48px,7vw,104px);padding-inline:max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+nav{position:sticky;top:0;z-index:20;background:rgba(18,10,22,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 20px;padding:10px max(5vw,16px)}
+.brand{font-family:Cinzel,serif;font-weight:700;color:var(--gold2);text-decoration:none;font-size:19px;white-space:nowrap}
+nav ul{list-style:none;display:flex;flex-wrap:wrap;gap:2px;margin:0;padding:0}
+nav li a{display:block;padding:10px 12px;color:var(--ink);text-decoration:none;font-size:16px;border-radius:6px}
+nav li a:hover,nav li a:focus-visible{background:var(--panel);color:var(--gold2)}
+.hero{position:relative;text-align:center;background:radial-gradient(ellipse 70% 60% at 50% 38%,#3a1c48 0%,#1d0f25 55%,var(--bg) 100%);padding-block:clamp(24px,4vw,56px) clamp(48px,6vw,88px);overflow:hidden}
+#snow{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero .wrap{position:relative}
+.crest{width:min(860px,100%);height:auto;aspect-ratio:3/2;object-fit:contain;margin:0 auto;filter:drop-shadow(0 18px 40px rgba(0,0,0,.6))}
+.tag{font-size:clamp(20px,2.4vw,26px);font-style:italic;color:var(--ink);margin:4px auto 20px;max-width:34ch}
+.addr{display:inline-flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;font-family:Cinzel,serif;font-size:15px;color:var(--gold2);border:1px solid var(--line);border-radius:999px;padding:10px 22px;background:rgba(18,10,22,.6)}
+.addr span{white-space:nowrap}
+.hours{margin:14px auto 0;font-size:18px;color:var(--ink);display:flex;flex-wrap:wrap;justify-content:center;gap:4px 10px;max-width:none}
+.hours b{font-family:Cinzel,serif;color:var(--gold2);font-size:16px;white-space:nowrap}
+.hours span{white-space:nowrap}
+.cta{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border-radius:8px;font-family:Cinzel,serif;font-weight:700;font-size:15px;text-decoration:none;border:1px solid var(--gold);color:var(--gold2);background:transparent}
+.btn.fill{background:var(--gold);color:#1b0f12}
+.btn:hover{background:var(--gold2);color:#1b0f12}
+.btn:focus-visible,button:focus-visible{outline:3px solid var(--gold2);outline-offset:3px}
+.intro{background:var(--bg2);border-block:1px solid var(--line)}
+.intro .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:start}
+.intro .lead{font-size:clamp(22px,2.6vw,28px);line-height:1.35;color:var(--ink);margin:0}
+.floors{display:grid;gap:14px}
+.floor{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start;padding:16px 18px;border:1px solid var(--line);border-radius:10px;background:var(--panel);text-decoration:none;color:var(--ink)}
+.floor:hover{border-color:var(--gold)}
+.floor b{font-family:Cinzel,serif;color:var(--gold2);font-size:17px;display:block}
+.floor small{font-size:16px;color:var(--soft)}
+.floor svg{width:40px;height:40px}
+.split{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center}
+.split.rev{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}
+.split.rev .pic{order:2}
+.pic{border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.pic img{width:100%;height:100%;object-fit:cover}
+.who{color:var(--soft);font-style:italic;margin-top:-.3em}
+.list{list-style:none;padding:0;margin:0 0 1.2em;display:grid;grid-template-columns:repeat(auto-fit,minmax(13em,1fr));gap:8px 20px}
+.list li{padding-left:22px;position:relative}
+.list li::before{content:"";position:absolute;left:2px;top:.62em;width:8px;height:8px;background:var(--gold);transform:rotate(45deg)}
+.notice{border:1px solid var(--ivy);background:color-mix(in srgb,var(--ivy) 12%,transparent);border-radius:10px;padding:14px 18px;margin-top:8px}
+.notice b{color:#c3dc8c;font-family:Cinzel,serif;font-size:16px;display:block;margin-bottom:2px}
+.notice p{margin:0}
+.guild{background:linear-gradient(180deg,var(--bg) 0%,#1a0e14 100%)}
+.board{margin-top:clamp(32px,4vw,52px);background:#3a2416;background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.14) 0 3px,transparent 3px 70px);border:10px solid #2a1a10;outline:1px solid var(--line);border-radius:12px;padding:clamp(16px,3vw,32px)}
+.bhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.bhead h3{margin:0;color:var(--gold2)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:rgba(18,10,22,.7);color:var(--ink);font:500 16px "EB Garamond",serif;cursor:pointer}
+.chips button[aria-pressed=true]{background:var(--gold);color:#1b0f12;border-color:var(--gold)}
+.notes{display:grid;grid-template-columns:repeat(auto-fill,minmax(15.5em,1fr));gap:18px}
+.note{position:relative;background:#ecdcb8;color:#2b1d12;padding:22px 18px 16px;border-radius:3px;box-shadow:0 8px 18px rgba(0,0,0,.45);transform:rotate(var(--r))}
+.note::before{content:"";position:absolute;top:8px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f6d98d,#9a6a1e);box-shadow:0 2px 3px rgba(0,0,0,.4)}
+.note h4{font:700 17px/1.2 Cinzel,serif;margin:6px 0 6px}
+.note p{font-size:16px;line-height:1.45;margin:0 0 10px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:15px;border-top:1px dashed rgba(43,29,18,.35);padding-top:8px}
+.meta span{white-space:nowrap}
+.kind{font-weight:600;color:#6a2b7d}
+.seal{position:absolute;right:12px;bottom:-10px;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#c23a3a,#7c1515);box-shadow:0 2px 4px rgba(0,0,0,.4)}
+.sample{font-size:15px;color:var(--soft);margin:16px 0 0;font-style:italic}
+.empty{color:var(--soft);font-style:italic;padding:12px 0}
+.bar{background:var(--bg2);border-block:1px solid var(--line)}
+.rules .wrap>p{color:var(--soft)}
+.cols{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);margin-top:28px}
+.ruleset{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:clamp(18px,3vw,32px)}
+.ruleset h3{color:var(--gold2);margin-bottom:4px}
+.ruleset .by{font-size:15px;color:var(--soft);margin-bottom:16px}
+.ruleset ol{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.ruleset li{padding-left:26px;position:relative}
+.ruleset li::before{content:"⟡";position:absolute;left:0;top:0;color:var(--gold)}
+.ruleset li p{margin:4px 0 0;color:var(--soft);font-size:17px}
+.ruleset strong{font-weight:600;color:var(--ink)}
+.age{display:flex;gap:14px;align-items:center;margin-top:18px;padding:14px 16px;border-radius:10px;background:color-mix(in srgb,var(--plum) 40%,transparent);border:1px solid var(--plum)}
+.age b{font-family:Cinzel,serif;font-size:30px;color:var(--gold2);white-space:nowrap}
+.age p{margin:0;font-size:16px}
+footer{background:#0b060e;border-top:1px solid var(--line)}
+footer .wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);gap:28px}
+footer h3{font-size:18px;color:var(--gold2)}
+footer p{font-size:17px;color:var(--soft);margin:0 0 .4em}
+.closing{font-family:Cinzel,serif;font-size:clamp(22px,2.6vw,28px);color:var(--ink);line-height:1.25;margin-bottom:10px}
+.fine{grid-column:1/-1;border-top:1px solid var(--line);padding-top:16px;font-size:15px;color:var(--soft)}
+@media(max-width:860px){.cols,.intro .wrap{grid-template-columns:minmax(0,1fr)}footer .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}footer .wrap>div:first-child{grid-column:1/-1}}
+@media(max-width:700px){.split,.split.rev{grid-template-columns:minmax(0,1fr)}.split.rev .pic{order:0}nav ul{width:100%;justify-content:space-between}nav li a{padding:10px 6px}}
+@media(max-width:600px){body{font-size:17px}.brand{font-size:17px}footer .wrap{grid-template-columns:minmax(0,1fr)}.note{transform:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#snow{display:none}}
+</style>
+</head>
+<body>
+<nav aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#top">Wayward Wonders</a>
+    <ul>
+      <li><a href="#shop">Magick shop</a></li>
+      <li><a href="#guild">Guild</a></li>
+      <li><a href="#bar">Bar</a></li>
+      <li><a href="#rules">Guidelines</a></li>
+      <li><a href="#visit">Visit</a></li>
+      <li><a href="https://discord.gg/fNXmrwwpx4" target="_blank" rel="noopener">Discord</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="snow" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <img class="crest" src="img/logo.webp" width="1200" height="800" alt="Wayward Wonders crest: gilded lettering over Ishgard's spires, flanked by potions, a sword, a lantern and guild banners">
+    <p class="tag">An emporium of the extraordinary and a haven for the adventurous. All walks of life welcomed.</p>
+    <div class="addr"><span>Diabolos</span><span>Empyreum</span><span>Ward 8, Plot 29</span></div>
+    <p class="hours"><b>Open Friday nights</b> <span>9 PM EST to 6 AM EST Saturday</span></p>
+    <div class="cta">
+      <a class="btn fill" href="#guild">See the contract board</a>
+      <a class="btn" href="https://discord.gg/fNXmrwwpx4" target="_blank" rel="noopener">Join our Discord</a>
+      <a class="btn" href="#rules">Read the guidelines</a>
+    </div>
+  </div>
+</header>
+
+<section class="band intro" aria-label="About">
+  <div class="wrap">
+    <div>
+      <p class="lead">Nestled within the storied city of Ishgard, Wayward Wonders is an independent establishment devoted to the curious, the capable, and those whose interests extend beyond the ordinary.</p>
+    </div>
+    <div>
+      <p>The house serves as both a one-stop magicks shop and an adventurer's guild: an eclectic assortment of magical goods, specialised services, professional opportunities, and a welcoming place to gather after a long day.</p>
+      <div class="floors">
+        <a class="floor" href="#shop">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M16 4h8v9l9 15a4 4 0 0 1-3.5 6h-19A4 4 0 0 1 7 28l9-15z" fill="#5b2a73" stroke="#d9a94e" stroke-width="2"/><path d="M11 24h18l3 5a2 2 0 0 1-2 3H10a2 2 0 0 1-2-3z" fill="#b26be0"/></svg>
+          <span><b>Upstairs: the magick shop</b><small>Alchemy, enchanted curios, rare materials and commissions.</small></span>
+        </a>
+        <a class="floor" href="#guild">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M7 33 31 9M33 33 9 9" stroke="#d9a94e" stroke-width="3" stroke-linecap="round"/><path d="M5 29l6 6M35 29l-6 6" stroke="#f0cd7f" stroke-width="4" stroke-linecap="round"/></svg>
+          <span><b>Downstairs: the guild</b><small>Contracts, expeditions and steady work for the capable.</small></span>
+        </a>
+        <a class="floor" href="#bar">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="9" y="10" width="18" height="24" rx="3" fill="#8a5a2b" stroke="#d9a94e" stroke-width="2"/><path d="M27 15h4a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-4" fill="none" stroke="#d9a94e" stroke-width="2"/><path d="M9 16h18M9 28h18" stroke="#5a3818" stroke-width="2"/></svg>
+          <span><b>The guild bar</b><small>Food and drink of every kind, and a fire against the chill.</small></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="shop">
+  <div class="wrap split">
+    <div class="pic"><img src="img/shop.webp" width="1400" height="787" alt="The magick shop: glowing crystals, rows of coloured potions, an elemental tapestry, scales and lanterns on a wooden counter"></div>
+    <div>
+      <h2>The magick shop</h2>
+      <p class="who">Overseen by proprietor Lume Lia</p>
+      <p>The shop above specialises in alchemical preparations, enchanted curiosities, rare materials, and an ever-changing collection of oddities.</p>
+      <ul class="list">
+        <li>Browse the shelves</li>
+        <li>Request a commission</li>
+        <li>Ask after the hard-to-find</li>
+        <li>Rare reagents and materials</li>
+      </ul>
+      <p>Patrons may browse what is in stock, request specialised work, or inquire after items not readily found through conventional merchants.</p>
+      <div class="notice">
+        <b>Now seeking shop hands</b>
+        <p>Botanists, alchemists, and those well versed in the various magicks are wanted to help run the top floor. Speak with Lume Lia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band guild" id="guild">
+  <div class="wrap">
+    <div class="split rev">
+      <div class="pic"><img src="img/board.webp" width="1000" height="1124" alt="The guild's contract board: bounty notices, a map strung with red thread, wax seals, a lantern and quill"></div>
+      <div>
+        <h2>The adventurers' guild</h2>
+        <p class="who">Under the direction of Guildmaster Gareth Cross</p>
+        <p>The guild below provides a structured network through which adventurers, mercenaries, scholars, and other capable individuals may seek employment, organise expeditions, and undertake contracts.</p>
+        <p>Whether your talents are martial, scholarly, medicinal, or otherwise, there may be work to suit them. Contracts are posted to the board; take one to the Guildmaster to claim it.</p>
+        <ul class="list">
+          <li>Bounties and hunts</li>
+          <li>Escorts and expeditions</li>
+          <li>Research and retrieval</li>
+          <li>Field medicine</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="board" aria-labelledby="board-title">
+      <div class="bhead">
+        <h3 id="board-title">Posted contracts</h3>
+        <div class="chips" role="group" aria-label="Filter contracts" id="chips"></div>
+      </div>
+      <div class="notes" id="notes"></div>
+      <p class="sample">Example contracts.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band bar" id="bar">
+  <div class="wrap split">
+    <div>
+      <h2>The guild bar</h2>
+      <p>For those seeking neither goods nor adventure, the bar in the guild is open for drink and food of all kinds.</p>
+      <p>We hold that there is no single right way to live, and that includes what you eat. Dietary needs are understood and catered to.</p>
+      <p>Exchange stories, enjoy refreshments, or find respite from the unforgiving chill that comes with Ishgard.</p>
+    </div>
+    <div class="pic"><img src="img/bar.webp" width="1400" height="851" alt="The guild bar: a long candlelit wooden counter with a bowl of stew, a tankard, carved stools and shelves of bottles"></div>
+  </div>
+</section>
+
+<section class="band rules" id="rules">
+  <div class="wrap">
+    <h2>Guidelines</h2>
+    <p>As long as patrons conduct themselves in an orderly manner, no one will be turned away for their constitution. Please read these before you visit or join the Discord.</p>
+    <div class="cols">
+      <div class="ruleset">
+        <h3>Out of character</h3>
+        <div class="by">Posted by Lume Lia, 11/10/2026</div>
+        <ol>
+          <li><strong>Members are 21+, both OOC and IC.</strong></li>
+          <li><strong>Zero tolerance for OOC prejudice of any kind,</strong> be it race, gender, sexuality, or identity.</li>
+          <li><strong>No politics. No religion.</strong> Keep personal affiliations and beliefs personal.</li>
+          <li><strong>Keep FFXIV talk in the spoiler channel.</strong><p>Folk are at all different points in the game and we try to be mindful, especially around Dawn Trail and Evercold content.</p></li>
+          <li><strong>Post in the channel that best fits your content.</strong> This is heavily enforced for anything NSFW.</li>
+          <li><strong>No god-modding or metagaming.</strong></li>
+          <li><strong>Include your character's name in your Discord name</strong> so folk can find you.</li>
+          <li><strong>Do not post excessively offensive content,</strong> humorous or otherwise.</li>
+          <li><strong>No ERP in public spaces at the venue.</strong>
+            <p>If you do ERP in public spaces, keep it to party chat. The exception is a venue event that explicitly states NSFW or ERP-like scenarios will occur; this will be made clear ahead of time so those who don't wish to be around it can stay away.</p>
+            <p>If a thread includes NSFW elements, list the proper tags and update them as you write.</p>
+            <p>Never send unsolicited lewd, nude or pornographic images or video, real-life or artistic, to any member without their explicit permission.</p>
+            <p>No NSFW Lalafell content on the grounds.</p></li>
+          <li><strong>IC ≠ OOC, and OOC ≠ IC.</strong> Separation between character and writer is essential to healthy roleplay relationships.</li>
+          <li><strong>Your voice matters.</strong> If you're experiencing an issue, reach out to the admin team by submitting a ticket.</li>
+          <li><strong>Be mindful and respectful. Don't be a dick.</strong><p>Don't be a nuisance in the community; repeated complaints from several members will lead to administrative action. We all have good and bad days, so take a step back when you need to. Anyone who doesn't abide by this will be warned, and if it recurs, removed.</p></li>
+          <li><strong>Consider your scene partners.</strong> RP usually involves several people, so think about whether others would enjoy the interaction you have in mind, and keep the quality of our content high.</li>
+          <li><strong>Staff have the final say.</strong> If something is out of line on power scaling, breaks our rules, or feels too hostile or OOC, we may step in and cull a scene if needed.</li>
+        </ol>
+      </div>
+      <div>
+        <div class="ruleset">
+          <h3>In character</h3>
+          <div class="by">Posted by Lume Lia, 11/11/2026</div>
+          <ol>
+            <li><strong>Power scaling is open,</strong> but protective wards are in place inside the establishment.</li>
+            <li><strong>We are lore compliant, but not strict.</strong></li>
+            <li><strong>IC actions have IC consequences.</strong><p>Communicate anything major, such as permanent damage, with the other person first. With consent given, there are no surprises. If you play a bad sort and end up hunted, no bitterness, please.</p></li>
+          </ol>
+        </div>
+        <div class="age">
+          <b>21+</b>
+          <p>Due to our dark themes, no underage characters are permitted on the grounds.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="band" id="visit">
+  <div class="wrap">
+    <div>
+      <p class="closing">Come seeking what you need. Leave having discovered something more.</p>
+      <p>Wayward Wonders, a roleplay venue in Final Fantasy XIV.</p>
+      <a class="btn fill" style="margin-top:12px" href="https://discord.gg/fNXmrwwpx4" target="_blank" rel="noopener">Join our Discord</a>
+      <p style="margin-top:10px;font-size:15px">discord.gg/fNXmrwwpx4</p>
+    </div>
+    <div>
+      <h3>Find us</h3>
+      <p>Diabolos (Crystal)</p>
+      <p>Empyreum, Ward 8, Plot 29</p>
+      <p>Ishgard</p>
+      <h3 style="margin-top:18px">Hours</h3>
+      <p>Normally open Friday nights, 9 PM EST until 6 AM EST Saturday morning.</p>
+    </div>
+    <div>
+      <h3>Staff</h3>
+      <p>Lume Lia, proprietor of the magick shop</p>
+      <p>Gareth Cross, guildmaster</p>
+      <p>Questions or problems: open a ticket on <a href="https://discord.gg/fNXmrwwpx4" target="_blank" rel="noopener">our Discord</a>.</p>
+    </div>
+    <p class="fine">A fan-run community. FINAL FANTASY XIV is a trademark of Square Enix; this site is not affiliated with Square Enix.</p>
+  </div>
+</footer>
+
+<script>
+{
+  const contracts = [
+    {t:"Wolves on the Convictory road", k:"Martial", d:"A pack has grown bold near the Western Highlands supply route. Thin it and bring back proof.", r:"150,000 gil", n:"2 to 4"},
+    {t:"Escort to Falcon's Nest", k:"Martial", d:"A merchant's cart needs safe passage through the snows. Departure at first bell.", r:"100,000 gil", n:"2"},
+    {t:"Cataloguing a dead collector's library", k:"Scholarly", d:"An estate in the Pillars holds unlabelled tomes, some of them warded. Read carefully.", r:"250,000 gil", n:"1"},
+    {t:"Translate an Allagan fragment", k:"Scholarly", d:"Rubbings of a tablet recovered in the Sea of Clouds. Discretion expected.", r:"750,000 gil", n:"1 to 2"},
+    {t:"Frostbite in the Foundation", k:"Medicinal", d:"The cold has the poor of Ishgard ailing. Volunteers with healing hands sought for an evening clinic.", r:"200,000 gil", n:"Any"},
+    {t:"Gather moonlit dragonsbreath", k:"Gathering", d:"Lume Lia needs fresh-cut blooms for a commission. They wilt by dawn.", r:"300,000 gil", n:"1"},
+    {t:"Strange lights at Witchdrop", k:"Investigation", d:"Hunters report lights where none should be. Find out what, and who.", r:"1,000,000 gil", n:"2 to 3"}
+  ];
+  const kinds = ["All", ...new Set(contracts.map(c=>c.k))];
+  let pick = "All";
+  const chips = document.getElementById("chips");
+  const notes = document.getElementById("notes");
+  const rot = [-1.4, .9, -.6, 1.3, -1, .5, -.3];
+  const esc = s => s.replace(/[&<>"]/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
+  const render = () => {
+    chips.innerHTML = kinds.map(k => `<button type="button" id="chip-${k.toLowerCase()}" aria-pressed="${k===pick}">${k}</button>`).join("");
+    const list = contracts.filter(c => pick==="All" || c.k===pick);
+    notes.innerHTML = list.length ? list.map((c,i) => `<article class="note" style="--r:${rot[i%rot.length]}deg"><span class="kind">${esc(c.k)}</span><h4>${esc(c.t)}</h4><p>${esc(c.d)}</p><div class="meta"><span>Reward: ${esc(c.r)}</span><span>Party: ${esc(c.n)}</span></div><span class="seal" aria-hidden="true"></span></article>`).join("") : `<p class="empty">No contracts of this kind posted right now.</p>`;
+  };
+  chips.addEventListener("click", e => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    pick = b.textContent;
+    render();
+  });
+  render();
+
+  const cv = document.getElementById("snow");
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (cv && !still) {
+    const ctx = cv.getContext("2d");
+    let W = 0, H = 0, flakes = [];
+    let seed = 7;
+    const rnd = () => (seed = seed * 16807 % 2147483647) / 2147483647;
+    const size = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = cv.clientWidth; H = cv.clientHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const n = Math.round(W * H / 9000);
+      flakes = Array.from({length:n}, () => ({x:rnd()*W, y:rnd()*H, r:.6+rnd()*2.2, s:.25+rnd()*.7, w:rnd()*6.28}));
+    };
+    const snowRO = new ResizeObserver(size);
+    snowRO.observe(cv);
+    const tick = () => {
+      ctx.clearRect(0, 0, W, H);
+      for (const f of flakes) {
+        f.y += f.s; f.w += .01; f.x += Math.sin(f.w) * .3;
+        if (f.y > H + 4) { f.y = -4; f.x = rnd() * W; }
+        ctx.globalAlpha = .35 + f.r / 5;
+        ctx.fillStyle = "#f4ecff";
+        ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, 6.283); ctx.fill();
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+}
+</script>
+</body>
+</html>
